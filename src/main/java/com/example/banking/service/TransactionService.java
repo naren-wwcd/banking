@@ -1,5 +1,8 @@
 package com.example.banking.service;
 
+import com.example.banking.exception.AccountInactiveException;
+import com.example.banking.exception.AccountNotFoundException;
+import com.example.banking.exception.InvalidPinException;
 import com.example.banking.model.AccountHolder;
 import com.example.banking.model.Transaction;
 import com.example.banking.repository.AccountHolderRepository;
@@ -27,16 +30,16 @@ public class TransactionService {
         AccountHolder ac=accountHolderRepository.findAccountHolderByAccountNumber(accountNumber);
         if(ac==null)
         {
-            return "account number not exist";
+            throw new AccountNotFoundException("account number not exist");
         }
         if(ac.getStatus().equals("INACTIVE"))
         {
-            return "account is inactive";
+            throw new AccountInactiveException("account is inactive");
         }
 
         if (pin != ac.getPin())
         {
-            return "invalid pin";
+            throw new InvalidPinException("invalid pin");
         }
         return "rupees "+ac.getBalance() +" is your balance";
     }
@@ -47,16 +50,16 @@ public class TransactionService {
         AccountHolder ac=accountHolderRepository.findAccountHolderByAccountNumber(accountNumber);
         if(ac==null)
         {
-            return "account number not exist";
+            throw new AccountNotFoundException("account number not exist") ;
         }
         if(ac.getStatus().equals("INACTIVE"))
         {
-            return "account is inactive";
+            throw new AccountInactiveException("account is inactive") ;
         }
 
         if (pin != ac.getPin())
         {
-            return "invalid pin";
+            throw new InvalidPinException("invalid pin") ;
         }
         if(amount<=0)
         {
@@ -79,15 +82,15 @@ public class TransactionService {
         AccountHolder ac=accountHolderRepository.findAccountHolderByAccountNumber(accountNumber);
         if(ac==null)
         {
-            return "account number not exist";
+            throw new AccountNotFoundException("account number not exist") ;
         }
         if(ac.getStatus().equals("INACTIVE"))
         {
-            return "account is inactive";
+            throw new AccountInactiveException("account is inactive") ;
         }
         if(pin != ac.getPin())
         {
-            return "invalid pin";
+            throw new InvalidPinException("invalid pin") ;
         }
         else
         {
@@ -113,24 +116,24 @@ public class TransactionService {
 
         if(senderAccount==null)
         {
-            return "your account number is invalid";
+            throw new AccountNotFoundException("your account number is invalid") ;
         }
         if(receiverAccount==null)
         {
-            return "can't able to find the receiver account ";
+            throw new AccountNotFoundException("can't able to find the receiver account ") ;
         }
         if(senderAccount.getStatus().equals("INACTIVE"))
         {
-            return "your account is inactive";
+            throw new AccountInactiveException("your account is inactive") ;
         }
         if(receiverAccount.getStatus().equals("INACTIVE"))
         {
-            return "receiver account is inactive";
+            throw new AccountInactiveException("receiver account is inactive") ;
         }
 
         if (pin != senderAccount.getPin())
         {
-            return "invalid pin";
+            throw new InvalidPinException("invalid pin") ;
         }
         else
         {
@@ -160,15 +163,15 @@ public class TransactionService {
         AccountHolder ac=accountHolderRepository.findAccountHolderByAccountNumber(accountNumber);
         if(ac==null)
         {
-            return new ArrayList<>();
+            throw new AccountNotFoundException("account number not exist");
         }
         if(ac.getStatus().equals("INACTIVE"))
         {
-            return new ArrayList<>();
+            throw new AccountInactiveException("account is inactive") ;
         }
         if(pin != ac.getPin())
         {
-            return new ArrayList<>();
+            throw new InvalidPinException("invalid pin") ;
         }
         else
         {

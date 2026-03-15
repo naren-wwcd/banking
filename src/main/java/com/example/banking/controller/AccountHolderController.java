@@ -29,7 +29,7 @@ public class AccountHolderController {
         return accountHolderService.showAllHolders();
     }
 
-    @GetMapping("/{accountNumber}")
+    @PostMapping("/{accountNumber}")
     public String getHolderDetailsByAccountNumberAndPin(@PathVariable String accountNumber, @RequestBody PinRequest pinRequest)
     {
         return accountHolderService.getHolderDetailsByAccountNumberAndPin(accountNumber,pinRequest.getPin());

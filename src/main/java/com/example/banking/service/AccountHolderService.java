@@ -1,5 +1,8 @@
 package com.example.banking.service;
 
+import com.example.banking.exception.AccountInactiveException;
+import com.example.banking.exception.AccountNotFoundException;
+import com.example.banking.exception.InvalidPinException;
 import com.example.banking.model.AccountHolder;
 import com.example.banking.model.DetailsUpdate;
 import com.example.banking.model.ResetPin;
@@ -27,16 +30,16 @@ public class AccountHolderService {
         AccountHolder ac=accountHolderRepository.findAccountHolderByAccountNumber(accountNumber);
         if(ac==null)
         {
-            return "account number not exist";
+            throw new AccountNotFoundException("account number not exist");
         }
         if(ac.getStatus().equals("INACTIVE"))
         {
-            return "account is inactive";
+            throw new AccountInactiveException("account is inactive");
         }
 
         if (pin != ac.getPin())
         {
-            return "invalid pin";
+            throw new InvalidPinException("invalid pin");
         }
         else
         {
@@ -49,15 +52,15 @@ public class AccountHolderService {
         AccountHolder ac=accountHolderRepository.findAccountHolderByAccountNumber(accountNumber);
         if(ac==null)
         {
-            return "account does not exist";
+            throw new AccountNotFoundException("account does not exist");
         }
         if(ac.getStatus().equals("INACTIVE"))
         {
-            return "account is already inactive";
+            throw new AccountInactiveException("account is already inactive");
         }
         if(pin !=ac.getPin())
         {
-            return "invalid pin";
+            throw new InvalidPinException("invalid pin");
         }
         else
         {
@@ -71,15 +74,15 @@ public class AccountHolderService {
         AccountHolder ac=accountHolderRepository.findAccountHolderByAccountNumber(accountNumber);
         if(ac==null)
         {
-            return "account does not exist";
+            throw new AccountNotFoundException("account does not exist");
         }
         if(ac.getStatus().equals("ACTIVE"))
         {
-            return "account is already active";
+            throw new AccountInactiveException("account is already active");
         }
         if(ac.getPin() !=pin)
         {
-            return "invalid pin";
+            throw new InvalidPinException("invalid pin");
         }
         else
         {
@@ -93,15 +96,15 @@ public class AccountHolderService {
         AccountHolder ac=accountHolderRepository.findAccountHolderByAccountNumber(accountNumber);
         if(ac==null)
         {
-            return "account does not exist";
+            throw new AccountNotFoundException("account does not exist");
         }
         if(ac.getStatus().equals("INACTIVE"))
         {
-            return "account is inactive";
+            throw new AccountInactiveException("account is inactive");
         }
         if(resetPin.getOldPin() !=ac.getPin())
         {
-            return "invalid pin";
+            throw new InvalidPinException("invalid pin");
         }
         else
         {
@@ -116,15 +119,15 @@ public class AccountHolderService {
         AccountHolder ac=accountHolderRepository.findAccountHolderByAccountNumber(accountNumber);
         if(ac==null)
         {
-            return "account does not exist";
+            throw new AccountNotFoundException("account does not exist");
         }
         if(ac.getStatus().equals("INACTIVE"))
         {
-            return "account is inactive";
+            throw new AccountInactiveException("account is inactive");
         }
         if(detailsUpdate.getPin() !=ac.getPin())
         {
-            return "invalid pin";
+            throw new InvalidPinException("invalid pin");
         }
         else
         {

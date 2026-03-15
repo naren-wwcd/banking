@@ -15,7 +15,7 @@ public class TransactionController {
     @Autowired
     TransactionService transactionService;
 
-    @GetMapping("/checkBalance/{accountNumber}")
+    @PostMapping("/checkBalance/{accountNumber}")
     public String checkBalance(@PathVariable String accountNumber,@RequestBody PinRequest pinRequest)
     {
        return transactionService.checkBalance(accountNumber,pinRequest.getPin());
@@ -35,7 +35,7 @@ public class TransactionController {
     {
         return transactionService.amountTransactionThroughAccount(accountNumber1,amount,pinRequest.getPin(),accountNumber2);
     }
-    @GetMapping("/transactionhistory/{accountNumber}")
+    @PostMapping("/transactionhistory/{accountNumber}")
     public List<Transaction> transactionHistory(@PathVariable String accountNumber, @RequestBody PinRequest pinRequest)
     {
         return transactionService.transactionHistory(accountNumber,pinRequest.getPin());
